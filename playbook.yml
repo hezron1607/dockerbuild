@@ -22,7 +22,7 @@
         name: container_by_jenkins
         image: ando16/apache-jenkins:latest
         state: started
-        published_port:
+        published_ports:
           - 83:80
         recreate: yes
         interactive: yes
