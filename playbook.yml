@@ -1,0 +1,28 @@
+- hosts: webserver
+  task:
+    - name: install python-docker centos
+      yum:
+        name: python-docker
+        state: present
+      when:
+      - ansible_distribution == "CentOS"
+    - name: install python-docker ubuntu
+      apt:
+        name: pyhton-docker
+        state: present
+      when:
+      - ansible_distribution == "Ubuntu"
+    - name: pull image
+      docker_image:
+        name: ando16/apache-jenkins:latest
+        pull: yes
+        rm: yes
+    - name: create container
+      docker_container:
+        name: container_by_jenkins
+        image: ando16/apache-jenkins:latest
+        state: started
+        published_port:
+          - 83:80
+        recreate: yes
+        interactive: yes
